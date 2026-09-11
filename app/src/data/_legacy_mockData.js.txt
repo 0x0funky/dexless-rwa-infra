@@ -1,0 +1,228 @@
+// ─── RWA Asset Categories ───
+export const ASSET_CATEGORIES = [
+  { id: 'real-estate', label: 'Real Estate', icon: 'building', desc: 'Properties, land, commercial buildings' },
+  { id: 'commodities', label: 'Commodities', icon: 'diamond', desc: 'Gold, silver, oil, agricultural products' },
+  { id: 'bonds', label: 'Bonds & Fixed Income', icon: 'file-text', desc: 'Government bonds, corporate debt, treasury bills' },
+  { id: 'equity', label: 'Private Equity', icon: 'bar-chart', desc: 'Company shares, startup equity, revenue share' },
+  { id: 'collectibles', label: 'Collectibles & Art', icon: 'image', desc: 'Fine art, luxury watches, wine, rare items' },
+  { id: 'ip', label: 'Intellectual Property', icon: 'zap', desc: 'Patents, royalties, licensing rights' },
+]
+
+// ─── Status ───
+export const STATUS = {
+  DRAFT: 'DRAFT',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  KYC_REQUIRED: 'KYC_REQUIRED',
+  ACTIVE: 'ACTIVE',
+  FUNDED: 'FUNDED',
+  TRADING: 'TRADING',
+  SUSPENDED: 'SUSPENDED',
+  REDEEMED: 'REDEEMED',
+}
+
+export const STATUS_CONFIG = {
+  DRAFT:          { label: 'Draft',          color: 'bg-gray-500/20 text-gray-400' },
+  PENDING_REVIEW: { label: 'Pending Review', color: 'bg-amber-500/20 text-amber-400' },
+  KYC_REQUIRED:   { label: 'KYC Required',  color: 'bg-orange-500/20 text-orange-400' },
+  ACTIVE:         { label: 'Active',         color: 'bg-emerald-500/20 text-emerald-400' },
+  FUNDED:         { label: 'Funded',         color: 'bg-blue-500/20 text-blue-400' },
+  TRADING:        { label: 'Trading',        color: 'bg-purple-500/20 text-purple-400' },
+  SUSPENDED:      { label: 'Suspended',      color: 'bg-red-500/20 text-red-400' },
+  REDEEMED:       { label: 'Redeemed',       color: 'bg-gray-500/20 text-gray-400' },
+}
+
+// ─── Valuation Methods ───
+export const VALUATION_METHODS = [
+  { id: 'appraisal', label: 'Professional Appraisal', desc: 'Third-party valuation report' },
+  { id: 'market', label: 'Market Price', desc: 'Based on recent comparable sales' },
+  { id: 'oracle', label: 'Oracle Feed', desc: 'Chainlink / Pyth real-time price' },
+  { id: 'self', label: 'Self-Declared', desc: 'Issuer sets the price' },
+]
+
+// ─── Token Standards ───
+export const TOKEN_STANDARDS = [
+  { id: 'erc20', label: 'ERC-20', desc: 'Fungible token — divisible, tradeable' },
+  { id: 'erc1155', label: 'ERC-1155', desc: 'Semi-fungible — fractional ownership' },
+  { id: 'erc3643', label: 'ERC-3643 (T-REX)', desc: 'Regulated security token with compliance' },
+]
+
+// ─── Listed RWA Assets (mock) ───
+export const listedAssets = [
+  {
+    id: 'rwa-001',
+    name: 'Taipei 101 Office Unit #3201',
+    category: 'real-estate',
+    status: STATUS.TRADING,
+    issuer: '0x7a3f...9e2b',
+    issuerName: 'TW Property Holdings',
+    tokenSymbol: 'TP101-3201',
+    totalSupply: 10000,
+    pricePerToken: 150,
+    totalValuation: 1500000,
+    valuationMethod: 'appraisal',
+    tokenStandard: 'erc3643',
+    currency: 'USDC',
+    createdAt: '2026-03-10T08:00:00Z',
+    description: 'Fractional ownership of a premium office unit on the 32nd floor of Taipei 101. 85 sqm, currently leased to a multinational tech company.',
+    documents: ['Ownership Certificate', 'Appraisal Report (2026)', 'Lease Agreement'],
+    metrics: { holders: 342, volume24h: 45200, traded: 6820, liquidity: 280000 },
+    yield: { annual: 5.2, frequency: 'Monthly', lastPayout: '2026-04-01' },
+  },
+  {
+    id: 'rwa-002',
+    name: 'Gold Bar Collection — 10kg LBMA',
+    category: 'commodities',
+    status: STATUS.TRADING,
+    issuer: '0x3c1a...f82d',
+    issuerName: 'MetalVault AG',
+    tokenSymbol: 'GBAR-10K',
+    totalSupply: 100000,
+    pricePerToken: 6.57,
+    totalValuation: 657000,
+    valuationMethod: 'oracle',
+    tokenStandard: 'erc20',
+    currency: 'USDC',
+    createdAt: '2026-02-20T12:00:00Z',
+    description: '10kg of LBMA-certified gold bars stored in a licensed vault in Zurich. Each token represents 0.0001 kg of physical gold.',
+    documents: ['LBMA Certificate', 'Vault Audit Report', 'Insurance Policy'],
+    metrics: { holders: 1205, volume24h: 128500, traded: 48200, liquidity: 520000 },
+    yield: { annual: 0, frequency: 'N/A', lastPayout: null },
+  },
+  {
+    id: 'rwa-003',
+    name: 'US Treasury Bond 2028',
+    category: 'bonds',
+    status: STATUS.ACTIVE,
+    issuer: '0x9b2e...1a7c',
+    issuerName: 'DeFi Treasury DAO',
+    tokenSymbol: 'USTB-28',
+    totalSupply: 50000,
+    pricePerToken: 98.50,
+    totalValuation: 4925000,
+    valuationMethod: 'market',
+    tokenStandard: 'erc20',
+    currency: 'USDC',
+    createdAt: '2026-03-25T10:00:00Z',
+    description: 'Tokenized US Treasury Bond maturing in 2028. 4.25% coupon rate, semi-annual payments distributed to token holders.',
+    documents: ['Bond Certificate', 'Custodian Agreement', 'Legal Opinion'],
+    metrics: { holders: 89, volume24h: 0, traded: 0, liquidity: 0 },
+    yield: { annual: 4.25, frequency: 'Semi-annual', lastPayout: '2026-03-15' },
+  },
+  {
+    id: 'rwa-004',
+    name: 'Contemporary Art — Banksy "Devolved Parliament"',
+    category: 'collectibles',
+    status: STATUS.PENDING_REVIEW,
+    issuer: '0x5d8f...c3e1',
+    issuerName: 'ArtBlock Collective',
+    tokenSymbol: 'BNKSY-DP',
+    totalSupply: 5000,
+    pricePerToken: 2400,
+    totalValuation: 12000000,
+    valuationMethod: 'appraisal',
+    tokenStandard: 'erc1155',
+    currency: 'USDC',
+    createdAt: '2026-04-05T16:00:00Z',
+    description: 'Fractional ownership of Banksy\'s "Devolved Parliament" (2009). Oil on canvas, 267 × 446 cm. Currently stored in a climate-controlled facility in London.',
+    documents: ['Certificate of Authenticity', 'Christie\'s Provenance', 'Insurance Certificate', 'Appraisal (Pending)'],
+    metrics: { holders: 0, volume24h: 0, traded: 0, liquidity: 0 },
+    yield: { annual: 0, frequency: 'N/A', lastPayout: null },
+  },
+]
+
+// ─── Platform Stats ───
+export const platformStats = {
+  totalAssets: 4,
+  totalValueLocked: 19082000,
+  totalHolders: 1636,
+  volume24h: 173700,
+  activeListings: 2,
+}
+
+// ─── Recent Activity ───
+export const recentActivity = [
+  { id: 'ev-1', time: '2026-04-08T10:15:00Z', type: 'success', message: 'GBAR-10K: 500 tokens traded at $6.57 each' },
+  { id: 'ev-2', time: '2026-04-08T09:30:00Z', type: 'info', message: 'BNKSY-DP submitted for review — awaiting document verification' },
+  { id: 'ev-3', time: '2026-04-07T16:00:00Z', type: 'success', message: 'TP101-3201: Monthly yield distribution — $0.65/token' },
+  { id: 'ev-4', time: '2026-04-06T11:15:00Z', type: 'info', message: 'USTB-28 listing approved — awaiting initial liquidity' },
+  { id: 'ev-5', time: '2026-04-05T16:00:00Z', type: 'info', message: 'New listing submitted: Banksy "Devolved Parliament"' },
+  { id: 'ev-6', time: '2026-04-03T14:20:00Z', type: 'success', message: 'KYC verified for ArtBlock Collective (0x5d8f...c3e1)' },
+]
+
+// ─── Jurisdiction Options ───
+export const JURISDICTIONS = [
+  'United States', 'European Union', 'United Kingdom', 'Singapore',
+  'Hong Kong', 'Taiwan', 'Japan', 'Switzerland', 'Cayman Islands',
+  'British Virgin Islands', 'Dubai (DIFC)', 'Other',
+]
+
+// ─── Investor Restriction Options ───
+export const INVESTOR_TYPES = [
+  { id: 'open', label: 'Open to All', desc: 'No restrictions on who can buy' },
+  { id: 'accredited', label: 'Accredited Investors Only', desc: 'Requires accredited investor verification' },
+  { id: 'qualified', label: 'Qualified Purchasers', desc: 'Higher threshold than accredited' },
+  { id: 'whitelist', label: 'Whitelist Only', desc: 'Manually approved wallet addresses' },
+]
+
+// ─── Helpers ───
+export function formatCurrency(n, decimals = 0) {
+  if (n == null) return '—'
+  if (n >= 1e9) return `$${(n / 1e9).toFixed(1)}B`
+  if (n >= 1e6) return `$${(n / 1e6).toFixed(1)}M`
+  if (n >= 1e3 && decimals === 0) return `$${(n / 1e3).toFixed(1)}K`
+  return `$${n.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: Math.max(decimals, 2) })}`
+}
+
+export function formatNumber(n) {
+  if (n == null) return '—'
+  return n.toLocaleString()
+}
+
+export function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}
+
+export function formatRelativeTime(iso) {
+  const diff = Date.now() - new Date(iso).getTime()
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return 'Just now'
+  if (mins < 60) return `${mins}m ago`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `${hrs}h ago`
+  const days = Math.floor(hrs / 24)
+  return `${days}d ago`
+}
+
+// ─── Price sources for Symbol Search (Step 1) ───
+export const availableSources = [
+  { name: 'Binance', type: 'CEX' },
+  { name: 'OKX', type: 'CEX' },
+  { name: 'Bybit', type: 'CEX' },
+  { name: 'Coinbase', type: 'CEX' },
+  { name: 'Pyth', type: 'Oracle' },
+  { name: 'Chainlink', type: 'Oracle' },
+]
+
+export const sourceSearchResults = {
+  BNB: [
+    { name: 'Binance', type: 'CEX', symbol: 'AVAXUSDT', found: true, price: 35.42, volume24h: 3464077 },
+    { name: 'OKX', type: 'CEX', symbol: 'AVAXUSDT', found: true, price: 35.38, volume24h: 82285471 },
+    { name: 'Bybit', type: 'CEX', symbol: 'BNB_new_USDT', found: true, price: 0, volume24h: 20580880 },
+    { name: 'Gate.io', type: 'CEX', symbol: 'BNB_new_USDT', found: true, price: 0, volume24h: 12834655 },
+    { name: 'KuCoin', type: 'CEX', symbol: 'BNB_new_USDT', found: true, price: 0, volume24h: 10690058 },
+    { name: 'Coinbase', type: 'CEX', symbol: 'BNB_new_USDT', found: true, price: 0, volume24h: 13568432 },
+    { name: 'Pyth', type: 'CEX', symbol: 'BNB_new/USD', found: true, price: 0, volume24h: 24157503 },
+    { name: 'Stork', type: 'CEX', symbol: 'BNB_new/USD', found: true, price: 0, volume24h: 31736523 },
+  ],
+  TSLA: [
+    { name: 'Binance', type: 'CEX', symbol: 'TSLAUSDT', found: true, price: 178.52, volume24h: 890000000 },
+    { name: 'OKX', type: 'CEX', symbol: 'TSLA-USDT', found: true, price: 178.48, volume24h: 320000000 },
+    { name: 'Bybit', type: 'CEX', symbol: 'TSLAUSDT', found: true, price: 178.50, volume24h: 210000000 },
+    { name: 'Pyth', type: 'Oracle', symbol: '0xef0d8b6fda2c...', found: true, price: 178.50, volume24h: null },
+  ],
+  GOLD: [
+    { name: 'Binance', type: 'CEX', symbol: 'XAUUSDT', found: true, price: 3285.40, volume24h: 1200000000 },
+    { name: 'OKX', type: 'CEX', symbol: 'XAU-USDT', found: true, price: 3285.20, volume24h: 580000000 },
+    { name: 'Pyth', type: 'Oracle', symbol: '0xfe65a1b0c937...', found: true, price: 3285.20, volume24h: null },
+  ],
+}

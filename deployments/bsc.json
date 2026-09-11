@@ -1,0 +1,59 @@
+{
+  "network": "bsc",
+  "chainId": 56,
+  "deployedAt": "2026-08-31T11:10:26.660Z",
+  "deployBlock": 119141067,
+  "deployer": "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608",
+  "admin": "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608",
+  "operator": "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608",
+  "treasury": "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608",
+  "deployerRetainsAdmin": true,
+  "explorer": "https://bscscan.com",
+  "contracts": {
+    "ComplianceRegistry": "0x23488Dd95646473c091c04D0647D7445020778DE",
+    "RWAAssetRegistry": "0x59511F70Ab6EAD4b9c0518B0DA2Cf539e58533A4",
+    "PriceValidationEngine": "0xcB37EFDC925200bEF595c9D8EbC7Ee7F69A1C6c0",
+    "MarketFactory": "0xfC3bE79eEBeE5BC903218FA9AE6d18C64519D392",
+    "RWAToken": "0x828c65a57473Ec4bad3303F63a6321Fa33a14c85",
+    "FeeDistributor": "0x0B01465b1288B91C0eDAa5DAF799eDEe3f43dd05"
+  },
+  "constructorArgs": {
+    "ComplianceRegistry": [
+      "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608"
+    ],
+    "RWAAssetRegistry": [
+      "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608"
+    ],
+    "PriceValidationEngine": [
+      "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608"
+    ],
+    "MarketFactory": [
+      "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608",
+      "0xcB37EFDC925200bEF595c9D8EbC7Ee7F69A1C6c0",
+      "0x59511F70Ab6EAD4b9c0518B0DA2Cf539e58533A4",
+      "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608",
+      {
+        "maxLeverageCap": 20,
+        "minInitialMarginBps": 500,
+        "minMaintenanceMarginBps": 250,
+        "seasoningPeriod": "3600",
+        "requiredValidations": "12",
+        "proposalTTL": "604800",
+        "bondAmount": "5000000000000000"
+      }
+    ],
+    "RWAToken": [
+      "DEXless Allocated Gold",
+      "dXAU",
+      "0x722fdcc192a010e94de980083962e9e2bc6f19d64a9cb828ebc10ad4f51d87eb",
+      "0x59511F70Ab6EAD4b9c0518B0DA2Cf539e58533A4",
+      "0x23488Dd95646473c091c04D0647D7445020778DE",
+      1,
+      "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608"
+    ],
+    "FeeDistributor": [
+      "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608",
+      "0x620CDFeca08DECA8BEb144460CA9270DB8ad4608"
+    ]
+  }
+}

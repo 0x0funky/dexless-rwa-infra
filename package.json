@@ -1,0 +1,41 @@
+{
+  "name": "dexless-rwa-infra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DEXless \u2014 Permissionless RWA Market Creation Layer on BNB Chain",
+  "scripts": {
+    "build": "hardhat compile",
+    "test": "hardhat test",
+    "coverage": "hardhat coverage",
+    "deploy:testnet": "hardhat run scripts/deploy.ts --network bscTestnet",
+    "deploy:mainnet": "cross-env ENV_FILE=.env.mainnet hardhat run scripts/deploy.ts --network bsc",
+    "verify:testnet": "hardhat run scripts/verify.ts --network bscTestnet",
+    "verify:mainnet": "cross-env ENV_FILE=.env.mainnet hardhat run scripts/verify.ts --network bsc",
+    "flow:testnet": "hardhat run scripts/business-flow.ts --network bscTestnet",
+    "flow:mainnet": "cross-env ENV_FILE=.env.mainnet hardhat run scripts/business-flow.ts --network bsc",
+    "keeper": "ts-node keeper/index.ts",
+    "wallets:new": "ts-node scripts/new-wallets.ts",
+    "wallets:fund": "ts-node scripts/fund-wallets.ts",
+    "wallets:status": "ts-node scripts/wallet-status.ts",
+    "rehearse": "npm run wallets:fund && npm run deploy:testnet && npm run verify:testnet && npm run flow:testnet && npm run abi",
+    "abi": "ts-node scripts/export-abi.ts",
+    "app": "npm --prefix app run dev",
+    "app:build": "npm run abi && npm --prefix app run build",
+    "wire:mainnet": "cross-env ENV_FILE=.env.mainnet hardhat run scripts/wire-live-feed.ts --network bsc",
+    "report:mainnet": "cross-env ENV_FILE=.env.mainnet hardhat run scripts/onchain-report.ts --network bsc",
+    "wallets:fund:mainnet": "cross-env ENV_FILE=.env.mainnet ts-node scripts/fund-wallets.ts",
+    "keeper:mainnet": "cross-env ENV_FILE=.env.mainnet ts-node keeper/index.ts"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "cross-env": "^10.1.0",
+    "dotenv": "^16.4.7",
+    "hardhat": "^2.22.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0"
+  }
+}

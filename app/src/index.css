@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #B084E9;
+  --color-primary-light: #D5BEF4;
+  --color-primary-dark: #894CD1;
+  --color-accent: #7FFBFF;
+  --color-link: #BD6BED;
+  --color-success: #29E9A9;
+  --color-success-dark: #00A178;
+  --color-danger: #F5618B;
+  --color-warning: #FFD146;
+  --font-sans: 'Poppins', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: rgba(12, 13, 16, 1);
+  color: rgba(255, 255, 255, 1);
+  font-family: 'Poppins', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease both;
+}
+
+/* Scrollbar — matches Dexless */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.04); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Number input spinners off */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }

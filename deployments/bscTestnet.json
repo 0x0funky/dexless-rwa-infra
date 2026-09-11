@@ -1,0 +1,59 @@
+{
+  "network": "bscTestnet",
+  "chainId": 97,
+  "deployedAt": "2026-08-10T19:56:25.922Z",
+  "deployer": "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030",
+  "admin": "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030",
+  "operator": "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030",
+  "treasury": "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030",
+  "deployerRetainsAdmin": true,
+  "explorer": "https://testnet.bscscan.com",
+  "contracts": {
+    "ComplianceRegistry": "0x7ba9dd9791bc64a782A874FA2A9d548791c098B5",
+    "RWAAssetRegistry": "0x515740C4293005292ABb7aEb920b08942E743eA0",
+    "PriceValidationEngine": "0xB69157314342e0eb5De62788F61E278c43e588B1",
+    "MarketFactory": "0x9b881a2e8eb6De852931da7db2CdE53A26faBAf7",
+    "RWAToken": "0xCf5157c92d184cd8ec41FAc69746c4c4933Ec9B1",
+    "FeeDistributor": "0xd804544EdDc01562e110a971095d002906d60460"
+  },
+  "constructorArgs": {
+    "ComplianceRegistry": [
+      "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030"
+    ],
+    "RWAAssetRegistry": [
+      "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030"
+    ],
+    "PriceValidationEngine": [
+      "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030"
+    ],
+    "MarketFactory": [
+      "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030",
+      "0xB69157314342e0eb5De62788F61E278c43e588B1",
+      "0x515740C4293005292ABb7aEb920b08942E743eA0",
+      "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030",
+      {
+        "maxLeverageCap": 20,
+        "minInitialMarginBps": 500,
+        "minMaintenanceMarginBps": 250,
+        "seasoningPeriod": "300",
+        "requiredValidations": "3",
+        "proposalTTL": "604800",
+        "bondAmount": "10000000000000000"
+      }
+    ],
+    "RWAToken": [
+      "DEXless Allocated Gold",
+      "dXAU",
+      "0x722fdcc192a010e94de980083962e9e2bc6f19d64a9cb828ebc10ad4f51d87eb",
+      "0x515740C4293005292ABb7aEb920b08942E743eA0",
+      "0x7ba9dd9791bc64a782A874FA2A9d548791c098B5",
+      1,
+      "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030"
+    ],
+    "FeeDistributor": [
+      "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030",
+      "0x6cCB3D1a6019C3fE0C3a8fd50142a2d3Bccb0030"
+    ]
+  },
+  "deployBlock": 124323132
+}
