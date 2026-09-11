@@ -2,7 +2,7 @@
   "name": "dexless-rwa-infra",
   "version": "0.1.0",
   "private": true,
-  "description": "DEXless \u2014 Permissionless RWA Market Creation Layer on BNB Chain",
+  "description": "DEXless — Permissionless RWA Market Creation Layer on BNB Chain",
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
@@ -24,7 +24,8 @@
     "wire:mainnet": "cross-env ENV_FILE=.env.mainnet hardhat run scripts/wire-live-feed.ts --network bsc",
     "report:mainnet": "cross-env ENV_FILE=.env.mainnet hardhat run scripts/onchain-report.ts --network bsc",
     "wallets:fund:mainnet": "cross-env ENV_FILE=.env.mainnet ts-node scripts/fund-wallets.ts",
-    "keeper:mainnet": "cross-env ENV_FILE=.env.mainnet ts-node keeper/index.ts"
+    "keeper:mainnet": "cross-env ENV_FILE=.env.mainnet ts-node keeper/index.ts",
+    "export:docx": "python scripts/md-to-docx.py docs/DEXLESS-BNB-SUBMISSION.md \"export/DEXless-BNB-送審材料.docx\""
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",

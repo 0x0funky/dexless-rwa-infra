@@ -271,7 +271,10 @@ function writeReport(book: any) {
 
   const dir = path.join(__dirname, "..", "docs");
   fs.mkdirSync(dir, { recursive: true });
-  const file = path.join(dir, "onchain-flow.md");
+  // One file per network. Appending every run into a single file silently mixed
+  // mainnet rows under a testnet header — a submission record that claims one
+  // chain while listing another is worse than no record.
+  const file = path.join(dir, `onchain-flow-${book.network}.md`);
 
   const header =
     `# DEXless — On-Chain Business Flow Record\n\n` +

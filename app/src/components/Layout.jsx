@@ -70,7 +70,7 @@ export default function Layout({ currentPage, onNavigate, children }) {
   return (
     <div className="flex h-screen bg-[rgba(12,13,16,1)] text-white overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-[64px] flex flex-col items-center py-4 bg-[rgba(12,13,16,1)] border-r border-white/[0.05] flex-shrink-0">
+      <aside className="w-[52px] sm:w-[64px] flex-shrink-0 flex flex-col items-center py-4 bg-[rgba(12,13,16,1)] border-r border-white/[0.05] flex-shrink-0">
         {/* Real Dexless D Logo */}
         <div
           className="w-10 h-10 rounded-xl bg-[rgba(19,21,25,1)] border border-white/[0.06] flex items-center justify-center mb-8 cursor-pointer hover:border-[rgba(127,251,255,0.15)] transition-all"
@@ -121,15 +121,20 @@ export default function Layout({ currentPage, onNavigate, children }) {
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Header with real DEXLESS wordmark */}
-        <header className="h-[52px] flex items-center justify-between px-5 border-b border-white/[0.05] flex-shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="cursor-pointer" onClick={() => onNavigate('dashboard')}>
+        {/* The wallet controls must never be the thing that gets clipped — they
+            are the only way in. So the right group never shrinks, and the
+            strapline on the left is what gives way on a narrow screen. */}
+        <header className="h-[52px] flex items-center justify-between gap-2 px-3 sm:px-5 border-b border-white/[0.05] flex-shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="cursor-pointer flex-shrink-0" onClick={() => onNavigate('dashboard')}>
               <DexlessWordmark />
             </div>
-            <span className="text-white/[0.08]">|</span>
-            <span className="text-white/[0.36] text-[11px] font-medium">Permissionless Listing</span>
+            <span className="text-white/[0.08] hidden md:inline">|</span>
+            <span className="text-white/[0.36] text-[11px] font-medium hidden md:inline truncate">
+              Permissionless Listing
+            </span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <NetworkBadge />
             <WalletButton />
           </div>

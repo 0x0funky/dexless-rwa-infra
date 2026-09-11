@@ -12,7 +12,9 @@ price only when several independent classes of source agree, on-chain, under
 rules anyone can audit. A market then has to *earn* its listing by proving its
 feed stays healthy — no committee approves it.
 
-Deployed on **BNB Chain**.
+**Live on BNB Chain mainnet.** The pricing pipeline runs against real market data
+from Binance, OKX, Gate.io, Chainlink and Pyth; all six contracts are verified on
+BscScan. Addresses: [`deployments/bsc.json`](deployments/bsc.json).
 
 ---
 
@@ -66,10 +68,12 @@ npm install
 npm run build
 npm test                       # 74 tests
 
-cp .env.example .env           # fill in keys
+npm run wallets:new            # generates .env with a fresh wallet set
+# fund the deployer address it prints, then:
+npm run wallets:fund           # spreads gas to the reporters and participants
 npm run deploy:testnet
 npm run verify:testnet
-npm run flow:testnet           # runs the full business flow, writes docs/onchain-flow.md
+npm run flow:testnet           # full business flow -> docs/onchain-flow-bscTestnet.md
 npm run keeper                 # starts the pricing pipeline
 
 npm run abi                    # publish ABIs + addresses to the app
@@ -77,9 +81,24 @@ npm --prefix app install
 npm run app                    # dApp on http://localhost:5173
 ```
 
-Mainnet uses the same commands with `:mainnet`. Re-run `npm run abi` after every
-deploy — it regenerates `app/src/lib/generated.js` from the Hardhat artifacts and
-`deployments/`, so the frontend can never drift from the deployed contracts.
+Mainnet uses the same commands with `:mainnet`, which load `.env.mainnet` instead
+of `.env`:
+
+```bash
+ENV_FILE=.env.mainnet NETWORK=mainnet npm run wallets:new
+npm run wallets:fund:mainnet
+npm run deploy:mainnet
+npm run verify:mainnet
+npm run flow:mainnet
+npm run keeper:mainnet
+```
+
+Re-run `npm run abi` after every deploy — it regenerates
+`app/src/lib/generated.js` from the Hardhat artifacts and `deployments/`, so the
+frontend can never drift from the deployed contracts.
+
+> Which env file loads is inferred from `--network` when `ENV_FILE` is not set,
+> so a mainnet command cannot silently pick up testnet keys.
 
 ## Layout
 
@@ -89,7 +108,8 @@ test/          74 tests across all six contracts
 scripts/       config.ts · deploy.ts · verify.ts · business-flow.ts · export-abi.ts
 keeper/        off-chain pricing pipeline + source adapters
 app/           React 19 + Vite + Tailwind 4 dApp (wagmi/viem)
-docs/          RWA-INFRA.md · RWA-ASSET.md · SUBMISSION.md · onchain-flow.md
+docs/          RWA-INFRA.md · RWA-ASSET.md · SUBMISSION-PACKAGE.md
+               onchain-flow-<network>.md · onchain-activity-<network>.md
 deployments/   address books per network (committed on purpose)
 ```
 

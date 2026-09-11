@@ -33,3 +33,6 @@ app/dist/
 DEXless Deck_RWA.pdf
 *.pdf
 !export/*.pdf
+
+# Transient Chrome profiles from CDP-driven verification runs.
+export/_*

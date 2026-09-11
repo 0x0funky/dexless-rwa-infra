@@ -2,6 +2,7 @@ import { ethers, network } from "hardhat";
 import * as fs from "fs";
 import * as path from "path";
 import { loadEnv } from "./env";
+import { SOURCE_ROSTER } from "./config";
 
 loadEnv();
 
@@ -37,14 +38,19 @@ const CONTRACTS = [
   "FeeDistributor",
 ] as const;
 
-/** Project-operated wallets, labelled honestly by what they actually are. */
+/**
+ * Project-operated wallets, labelled honestly by what they actually are.
+ * Price sources come from the shared roster so a newly added source cannot be
+ * left out of the count.
+ */
 const PROJECT_WALLETS: { key: string; label: string; nature: string }[] = [
   { key: "DEPLOYER_PRIVATE_KEY", label: "Operator / deployer", nature: "infrastructure" },
   { key: "REPORTER_KEY_0", label: "Retired source slot", nature: "infrastructure" },
-  { key: "REPORTER_KEY_1", label: "Price source — Binance", nature: "infrastructure" },
-  { key: "REPORTER_KEY_2", label: "Price source — OKX", nature: "infrastructure" },
-  { key: "REPORTER_KEY_3", label: "Price source — Pyth", nature: "infrastructure" },
-  { key: "REPORTER_KEY_4", label: "Price source — Gate.io", nature: "infrastructure" },
+  ...SOURCE_ROSTER.map((r) => ({
+    key: r.keyEnv,
+    label: `Price source — ${r.name}`,
+    nature: "infrastructure",
+  })),
   { key: "INVESTOR_KEY_0", label: "Test participant 1", nature: "project-operated" },
   { key: "INVESTOR_KEY_1", label: "Test participant 2", nature: "project-operated" },
   { key: "INVESTOR_KEY_2", label: "Test participant 3", nature: "project-operated" },
@@ -250,7 +256,7 @@ async function main() {
       : `| — | — | — | *(none in the scanned window)* |`) +
     `\n`;
 
-  const out = path.join(__dirname, "..", "docs", "onchain-activity.md");
+  const out = path.join(__dirname, "..", "docs", `onchain-activity-${book.network}.md`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, md);
   console.log(`\nwritten to ${out}`);

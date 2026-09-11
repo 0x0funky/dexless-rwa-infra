@@ -46,8 +46,8 @@ function DashboardInner({ onNavigate }) {
   const engine = contractFor(chainId, 'PriceValidationEngine')
 
   return (
-    <div className="p-6 max-w-[1400px] mx-auto">
-      <div className="flex items-start justify-between mb-6">
+    <div className="p-4 sm:p-6 max-w-[1400px] mx-auto">
+      <div className="flex items-start justify-between gap-3 mb-6 flex-wrap">
         <div>
           <h1 className="text-xl font-semibold mb-1">Permissionless RWA Markets</h1>
           <p className="text-xs text-white/[0.36]">
@@ -59,7 +59,7 @@ function DashboardInner({ onNavigate }) {
             href={addressUrl(chainId, engine.address)}
             target="_blank"
             rel="noreferrer"
-            className="text-[11px] text-[#B084E9] hover:text-[#D5BEF4] transition-colors"
+            className="text-[11px] text-[#B084E9] hover:text-[#D5BEF4] transition-colors whitespace-nowrap"
           >
             View contracts on BscScan ↗
           </a>
@@ -81,9 +81,12 @@ function DashboardInner({ onNavigate }) {
         />
       </div>
 
-      <div className="grid lg:grid-cols-[1.4fr_1fr] gap-6">
+      {/* Grid children default to min-width:auto and so refuse to shrink below
+          their min-content width — that is what pushed the cards past the
+          viewport on a phone. min-w-0 lets them actually fit. */}
+      <div className="grid lg:grid-cols-[1.4fr_1fr] gap-4 sm:gap-6 [&>*]:min-w-0">
         <FeedPanel feedId={PILOT_FEED_ID} />
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6 min-w-0">
           <MarketsPanel onNavigate={onNavigate} />
           <AssetsPanel />
         </div>
@@ -135,7 +138,7 @@ function FeedPanel({ feedId }) {
         {feed.description || 'Price Feed'}
       </SectionTitle>
 
-      <div className="flex items-baseline gap-3 mb-1">
+      <div className="flex items-baseline gap-x-3 gap-y-1 mb-1 flex-wrap">
         <span className="text-3xl font-semibold tabular-nums">
           {feed.price ? formatUnits18(feed.price, 2) : '—'}
         </span>
@@ -151,7 +154,7 @@ function FeedPanel({ feedId }) {
 
       {/* The rules every quote must clear, read from the on-chain RiskConfig */}
       {feed.risk && (
-        <div className="grid grid-cols-3 gap-2 mb-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5">
           <RiskCell label="Max deviation" value={formatBps(feed.risk.maxDeviationBps)} />
           <RiskCell label="Max spread" value={formatBps(feed.risk.maxSpreadBps)} />
           <RiskCell label="Max staleness" value={formatDuration(feed.risk.maxStaleness)} />
@@ -304,7 +307,7 @@ function MarketsPanel({ onNavigate }) {
                   {status}
                 </Badge>
               </div>
-              <div className="flex items-center gap-3 text-[10px] text-white/[0.36]">
+              <div className="flex items-center gap-x-3 gap-y-1 text-[10px] text-white/[0.36] flex-wrap">
                 <span>{Number(market.config.maxLeverage)}x max</span>
                 <span>IM {formatBps(market.config.initialMarginBps)}</span>
                 <span>MM {formatBps(market.config.maintenanceMarginBps)}</span>

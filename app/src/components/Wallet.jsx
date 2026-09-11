@@ -1,9 +1,19 @@
-import { useAccount, useConnect, useDisconnect, useChainId, useSwitchChain } from 'wagmi'
+import { useAccount, useChainId, useSwitchChain } from 'wagmi'
 import { bsc } from 'wagmi/chains'
-import { useState } from 'react'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Button } from './UI'
 import { chainName, SUPPORTED_CHAINS, DEFAULT_CHAIN_ID } from '../lib/wagmi'
-import { isDeployed, shortAddress } from '../lib/contracts'
+import { isDeployed } from '../lib/contracts'
+
+/**
+ * Wallet surfaces.
+ *
+ * RainbowKit owns the connect modal — it covers the cases a hand-rolled injected
+ * button cannot: WalletConnect QR for a desktop visitor holding a phone wallet,
+ * deep links into wallet apps on mobile, and a real picker when several
+ * extensions are installed. The custom render props below keep the trigger
+ * looking like the rest of the product rather than a third-party widget.
+ */
 
 /** Network pill — turns red when the wallet is on a chain we have no contracts on. */
 export function NetworkBadge() {
@@ -25,11 +35,13 @@ export function NetworkBadge() {
     )
   }
 
+  // Purely informational once everything is correct, so it steps aside on a
+  // phone to leave room for the connect button. A problem state still shows.
   return (
     <span
-      className={`text-[10px] px-3 py-1 rounded-full border ${
+      className={`text-[10px] px-3 py-1 rounded-full border whitespace-nowrap ${
         deployed
-          ? 'text-white/[0.3] bg-white/[0.04] border-white/[0.06]'
+          ? 'text-white/[0.3] bg-white/[0.04] border-white/[0.06] hidden sm:inline'
           : 'text-[#FFD146] bg-[rgba(255,209,70,0.1)] border-[#FFD146]/20'
       }`}
       title={deployed ? undefined : 'No contracts deployed on this chain yet'}
@@ -40,85 +52,68 @@ export function NetworkBadge() {
   )
 }
 
+/** Header trigger: opens RainbowKit's modal, styled as our own button. */
 export function WalletButton() {
-  const { address, isConnected } = useAccount()
-  const { connect, connectors, isPending, error } = useConnect()
-  const { disconnect } = useDisconnect()
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  if (!isConnected) {
-    const injected = connectors[0]
-    return (
-      <div className="flex items-center gap-2">
-        {error && (
-          <span className="text-[10px] text-[#F5618B] max-w-[200px] truncate" title={error.message}>
-            {error.message}
-          </span>
-        )}
-        <Button
-          size="sm"
-          onClick={() => connect({ connector: injected })}
-          disabled={isPending || !injected}
-        >
-          {isPending ? 'Connecting…' : 'Connect Wallet'}
-        </Button>
-      </div>
-    )
-  }
-
   return (
-    <div className="relative">
-      <div
-        onClick={() => setMenuOpen((o) => !o)}
-        className="flex items-center gap-2 bg-white/[0.05] px-3 py-1.5 rounded-xl cursor-pointer hover:bg-white/[0.08] transition-all border border-white/[0.06]"
-      >
-        <span className="w-[6px] h-[6px] rounded-full bg-[#29E9A9]" />
-        <span className="text-[11px] font-medium text-white/[0.54]">{shortAddress(address)}</span>
-      </div>
+    <ConnectButton.Custom>
+      {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
+        const ready = mounted
+        const connected = ready && account && chain
 
-      {menuOpen && (
-        <>
-          <div className="fixed inset-0 z-40" onClick={() => setMenuOpen(false)} />
-          <div className="absolute right-0 mt-2 z-50 bg-[rgba(12,13,16,0.97)] backdrop-blur-[20px] border border-white/[0.08] rounded-xl p-1 shadow-[0_8px_32px_rgba(0,0,0,0.5)] min-w-[160px]">
-            <button
-              onClick={() => {
-                navigator.clipboard?.writeText(address)
-                setMenuOpen(false)
-              }}
-              className="w-full text-left px-3 py-2 text-[11px] text-white/[0.54] hover:text-white hover:bg-white/[0.05] rounded-lg transition-all"
-            >
-              Copy address
-            </button>
-            <button
-              onClick={() => {
-                disconnect()
-                setMenuOpen(false)
-              }}
-              className="w-full text-left px-3 py-2 text-[11px] text-[#F5618B] hover:bg-[rgba(245,97,139,0.1)] rounded-lg transition-all"
-            >
-              Disconnect
-            </button>
+        return (
+          <div
+            aria-hidden={!ready}
+            style={ready ? undefined : { opacity: 0, pointerEvents: 'none', userSelect: 'none' }}
+          >
+            {!connected ? (
+              <Button size="sm" onClick={openConnectModal}>
+                Connect Wallet
+              </Button>
+            ) : chain.unsupported ? (
+              <button
+                onClick={openChainModal}
+                className="text-[11px] font-medium text-[#F5618B] bg-[rgba(245,97,139,0.12)] px-3 py-1.5 rounded-xl border border-[#F5618B]/20 hover:bg-[rgba(245,97,139,0.2)] transition-all"
+              >
+                切換到 BNB Chain
+              </button>
+            ) : (
+              <button
+                onClick={openAccountModal}
+                className="flex items-center gap-2 bg-white/[0.05] px-3 py-1.5 rounded-xl cursor-pointer hover:bg-white/[0.08] transition-all border border-white/[0.06]"
+              >
+                <span className="w-[6px] h-[6px] rounded-full bg-[#29E9A9]" />
+                <span className="text-[11px] font-medium text-white/[0.54]">
+                  {account.displayName}
+                </span>
+              </button>
+            )}
           </div>
-        </>
-      )}
-    </div>
+        )
+      }}
+    </ConnectButton.Custom>
   )
 }
 
-/** Blocks a page when the wallet is not connected. */
+/** Blocks a page until a wallet is connected. */
 export function RequireWallet({ children }) {
   const { isConnected } = useAccount()
-  const { connect, connectors } = useConnect()
 
   if (isConnected) return children
 
   return (
-    <div className="flex flex-col items-center justify-center py-24 text-center">
-      <p className="text-sm text-white/[0.54] mb-1">Connect your wallet to continue</p>
-      <p className="text-xs text-white/[0.3] mb-5">
-        DEXless runs on BNB Chain. All actions are on-chain transactions.
+    <div className="flex flex-col items-center justify-center py-20 px-5">
+      <p className="text-sm text-white/[0.7] mb-1">連接錢包以繼續</p>
+      <p className="text-xs text-white/[0.36] mb-6 text-center max-w-[420px]">
+        DEXless 運行於 BNB Chain,所有操作都是鏈上交易。
+        手機請用錢包 App 掃描 QR code,或直接在錢包內建瀏覽器開啟本站。
       </p>
-      <Button onClick={() => connect({ connector: connectors[0] })}>Connect Wallet</Button>
+      <ConnectButton.Custom>
+        {({ openConnectModal, mounted }) => (
+          <Button onClick={openConnectModal} disabled={!mounted}>
+            Connect Wallet
+          </Button>
+        )}
+      </ConnectButton.Custom>
     </div>
   )
 }

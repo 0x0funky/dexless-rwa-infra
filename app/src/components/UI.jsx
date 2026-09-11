@@ -84,7 +84,7 @@ export function ProgressBar({ value, max }) {
 export function Card({ children, className = '', onClick }) {
   return (
     <div
-      className={`bg-[rgba(12,13,16,0.8)] backdrop-blur-[20px] border border-white/[0.06] rounded-2xl p-5 transition-all duration-300 ${onClick ? 'cursor-pointer hover:bg-[rgba(36,32,47,0.8)] hover:border-[rgba(127,251,255,0.12)]' : ''} ${className}`}
+      className={`bg-[rgba(12,13,16,0.8)] backdrop-blur-[20px] border border-white/[0.06] rounded-2xl p-4 sm:p-5 min-w-0 transition-all duration-300 ${onClick ? 'cursor-pointer hover:bg-[rgba(36,32,47,0.8)] hover:border-[rgba(127,251,255,0.12)]' : ''} ${className}`}
       onClick={onClick}
     >
       {children}
